@@ -9,16 +9,17 @@ import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import SearchBar from "./components/SearchBar/SearchBar";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
+import { ImageType, ModalDataType, requestDataType } from "./types";
 
 function App() {
-  const [query, setQuery] = useState("");
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [page, setPage] = useState(1);
-  const [loadMoreBtn, setLoadMoreBtn] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalData, setModalData] = useState({
+  const [query, setQuery] = useState<string>("");
+  const [images, setImages] = useState<ImageType[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [loadMoreBtn, setLoadMoreBtn] = useState<boolean>(false);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [modalData, setModalData] = useState<ModalDataType>({
     imageSrc: "",
     imageAltDescription: "",
     imageDescription: "",
@@ -35,15 +36,17 @@ function App() {
         setError(false);
         setLoading(true);
         setLoadMoreBtn(false);
-        const data = await requestImagesByQuery(query, page);
+        const data: requestDataType = await requestImagesByQuery(query, page);
         if (data.total === 0) {
           setImages([]);
           toast("Sorry, we couldn't find any images! Please, try again!", {
             position: "top-right",
           });
         } else {
-          setImages((prevImages) => [...prevImages, ...data.results]);
-          setLoadMoreBtn(data.total_pages && data.total_pages !== page);
+          setImages((prevImages) => [...prevImages, ...(data.results || [])]);
+          setLoadMoreBtn(
+            data.total_pages !== null && data.total_pages !== page
+          );
         }
       } catch (error) {
         setError(true);
@@ -54,7 +57,7 @@ function App() {
     fetchPhotos();
   }, [query, page]);
 
-  const handleSearch = (searchQuery) => {
+  const handleSearch = (searchQuery: string) => {
     if (searchQuery !== query) {
       setQuery(searchQuery);
       setPage(1);
@@ -74,7 +77,7 @@ function App() {
     setModalIsOpen(false);
   };
 
-  const handleImageClick = (imageData) => {
+  const handleImageClick = (imageData: ModalDataType) => {
     setModalData(imageData);
     openModal();
   };

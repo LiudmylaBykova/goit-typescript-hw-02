@@ -3,11 +3,18 @@ import toast, { Toaster } from "react-hot-toast";
 import { BiSearchAlt } from "react-icons/bi";
 import css from "./SearchBar.module.css";
 
-const SearchBar = ({ onSearch }) => {
+interface SearchBarProps {
+  onSearch: (query: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const initialValues = {
     query: "",
   };
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = (
+    values: { query: string },
+    { resetForm }: { resetForm: () => void }
+  ) => {
     if (!values.query) {
       toast("Please enter your search!", {
         position: "top-right",
@@ -15,7 +22,7 @@ const SearchBar = ({ onSearch }) => {
       return;
     }
     onSearch(values.query);
-    actions.resetForm();
+    resetForm();
   };
 
   return (

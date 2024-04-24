@@ -1,5 +1,11 @@
+import { ImageType, ModalDataType } from "../../types";
 import css from "./ImageCard.module.css";
-const ImageCard = ({ image, onImageClick }) => {
+
+interface ImageCardProps {
+  onImageClick: (image: ModalDataType) => void;
+  image: ImageType;
+}
+const ImageCard = ({ image, onImageClick }: ImageCardProps) => {
   const imageData = {
     imageSrc: image.urls.regular,
     imageAltDescription: image.alt_description,
