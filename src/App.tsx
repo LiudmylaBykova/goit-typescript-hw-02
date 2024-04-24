@@ -57,7 +57,7 @@ function App() {
     fetchPhotos();
   }, [query, page]);
 
-  const handleSearch = (searchQuery: string) => {
+  const handleSearch = (searchQuery: string): void => {
     if (searchQuery !== query) {
       setQuery(searchQuery);
       setPage(1);
@@ -69,15 +69,15 @@ function App() {
     setPage((prevPage) => prevPage + 1);
   };
 
-  const openModal = () => {
+  const openModal = (): void => {
     setModalIsOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setModalIsOpen(false);
   };
 
-  const handleImageClick = (imageData: ModalDataType) => {
+  const handleImageClick = (imageData: ModalDataType): void => {
     setModalData(imageData);
     openModal();
   };
