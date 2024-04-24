@@ -65,7 +65,7 @@ function App() {
     }
   };
 
-  const handleSearchNextPage = () => {
+  const handleSearchNextPage = (): void => {
     setPage((prevPage) => prevPage + 1);
   };
 
