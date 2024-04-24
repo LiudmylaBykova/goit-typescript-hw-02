@@ -9,7 +9,7 @@ import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import SearchBar from "./components/SearchBar/SearchBar";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
-import { ImageType, ModalDataType, requestDataType } from "./types";
+import { ImageType, ModalDataType, responseDataType } from "./types";
 
 function App() {
   const [query, setQuery] = useState<string>("");
@@ -36,14 +36,14 @@ function App() {
         setError(false);
         setLoading(true);
         setLoadMoreBtn(false);
-        const data: requestDataType = await requestImagesByQuery(query, page);
+        const data: responseDataType = await requestImagesByQuery(query, page);
         if (data.total === 0) {
           setImages([]);
           toast("Sorry, we couldn't find any images! Please, try again!", {
             position: "top-right",
           });
         } else {
-          setImages((prevImages) => [...prevImages, ...(data.results || [])]);
+          setImages((prevImages) => [...prevImages, ...data.results]);
           setLoadMoreBtn(
             data.total_pages !== null && data.total_pages !== page
           );

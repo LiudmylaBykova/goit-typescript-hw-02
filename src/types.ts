@@ -26,7 +26,10 @@ export type requestDataType = {
   page: number;
   per_page: number;
   orientation: string;
-  total?: number;
-  total_pages?: number;
-  results?: ImageType[];
+};
+
+export type responseDataType = {
+  total: number;
+  total_pages: number;
+  results: ImageType[];
 };

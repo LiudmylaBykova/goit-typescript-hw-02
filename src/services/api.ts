@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { requestDataType } from "../types";
+import { requestDataType, responseDataType } from "../types";
 
 axios.defaults.baseURL = "https://api.unsplash.com";
 const ACCESS_KEY: string = "fhk85qoOsehbeckGzajzOswz9IbUvVrK7NkOVv2kS-8";
@@ -13,7 +13,7 @@ const searchParms: requestDataType = {
 };
 
 const requestImagesByQuery = async (query: string, page: number) => {
-  const { data }: AxiosResponse<requestDataType> = await axios.get(
+  const { data }: AxiosResponse<responseDataType> = await axios.get(
     "/search/photos",
     {
       params: {
